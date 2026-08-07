@@ -1,0 +1,15 @@
+---
+interface Props {
+  /** Vertraging in seconden (voor stagger-effecten). */
+  delay?: number;
+  /** HTML-element dat gerenderd wordt. */
+  as?: keyof HTMLElementTagNameMap;
+  class?: string;
+}
+const { delay = 0, as = 'div', class: extra = '' } = Astro.props;
+const Tag = as;
+---
+
+<Tag class:list={['reveal', extra]} style={delay ? `--reveal-delay:${delay}s` : undefined}>
+  <slot />
+</Tag>

@@ -1,0 +1,162 @@
+---
+import { site } from '../data/site';
+---
+
+<form class="contact-form" data-contact-form novalidate>
+  <div class="field-row">
+    <div class="field">
+      <label for="cf-voornaam">Voornaam <span aria-hidden="true">*</span></label>
+      <input id="cf-voornaam" name="voornaam" type="text" autocomplete="given-name" required />
+    </div>
+    <div class="field">
+      <label for="cf-achternaam">Achternaam <span aria-hidden="true">*</span></label>
+      <input id="cf-achternaam" name="achternaam" type="text" autocomplete="family-name" required />
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label for="cf-email">E-mail <span aria-hidden="true">*</span></label>
+      <input id="cf-email" name="email" type="email" autocomplete="email" required />
+    </div>
+    <div class="field">
+      <label for="cf-tel">Telefoonnummer</label>
+      <input id="cf-tel" name="telefoon" type="tel" autocomplete="tel" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="cf-onderwerp">Onderwerp</label>
+    <input id="cf-onderwerp" name="onderwerp" type="text" />
+  </div>
+
+  <div class="field">
+    <label for="cf-bericht">Bericht</label>
+    <textarea id="cf-bericht" name="bericht" rows="4"></textarea>
+  </div>
+
+  <div class="form-foot">
+    <button type="submit" class="btn">
+      Verstuur bericht
+      <span class="btn-arrow" aria-hidden="true">→</span>
+    </button>
+    <p class="form-note" data-form-note role="status">
+      Of mail direct naar{' '}<a href={`mailto:${site.email}`}>{site.email}</a>. We nemen
+      binnen twee werkdagen contact met u op.
+    </p>
+  </div>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const note = document.querySelector<HTMLElement>('[data-form-note]');
+  const EMAIL = 'info@boitelle.nl';
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const val = (k: string) => String(data.get(k) ?? '').trim();
+
+    const naam = [val('voornaam'), val('achternaam')].filter(Boolean).join(' ');
+    const subject = val('onderwerp') || `Contactaanvraag via website${naam ? ` van ${naam}` : ''}`;
+
+    const body = [
+      `Naam: ${naam}`,
+      `E-mail: ${val('email')}`,
+      val('telefoon') ? `Telefoon: ${val('telefoon')}` : null,
+      '',
+      val('bericht') || '(geen bericht ingevuld)',
+    ]
+      .filter((line) => line !== null)
+      .join('\n');
+
+    const mailto = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+
+    if (note) {
+      note.innerHTML =
+        'Uw mailprogramma is geopend met het bericht. Komt er niets in beeld? Mail dan direct naar <a href="mailto:info@boitelle.nl">info@boitelle.nl</a>.';
+    }
+  });
+</script>
+
+<style>
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.35rem;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: color-mix(in srgb, var(--cream) 78%, transparent);
+  }
+  .field label span {
+    color: var(--ochre);
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 0.7rem 0.2rem;
+    color: var(--cream);
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid color-mix(in srgb, var(--cream) 28%, transparent);
+    border-radius: 0;
+    transition: border-color 0.25s ease;
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 3.5rem;
+  }
+  .field input:hover,
+  .field textarea:hover {
+    border-bottom-color: color-mix(in srgb, var(--cream) 50%, transparent);
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-bottom-color: var(--ochre);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: color-mix(in srgb, var(--cream) 40%, transparent);
+  }
+
+  .form-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 0.25rem;
+  }
+  .form-note {
+    font-size: var(--fs-small);
+    color: color-mix(in srgb, var(--cream) 62%, transparent);
+    max-width: 28ch;
+  }
+  .form-note a {
+    color: var(--cream);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  @media (max-width: 560px) {
+    .field-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

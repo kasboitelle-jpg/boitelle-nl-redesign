@@ -1,0 +1,176 @@
+---
+import { nav, site } from '../data/site';
+import Wordmark from './Wordmark.astro';
+import ContactForm from './ContactForm.astro';
+
+const year = 2026;
+---
+
+<footer class="site-footer" id="contact">
+  <div class="container footer-grid">
+    <div class="footer-intro">
+      <span class="eyebrow eyebrow-light">Neem contact op</span>
+      <h2>Klaar om verzuim aantoonbaar te verlagen?</h2>
+      <p class="footer-lead">
+        We denken graag vrijblijvend met u mee en nemen binnen twee werkdagen
+        contact met u op.
+      </p>
+
+      <ul class="contact-list">
+        <li>
+          <span class="contact-label">Telefoon</span>
+          <a href={site.phoneHref}>{site.phone}</a>
+        </li>
+        <li>
+          <span class="contact-label">E-mail</span>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </li>
+        <li>
+          <span class="contact-label">Post</span>
+          <span>{site.address.org}, {site.address.postbus}, {site.address.city}</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-form">
+      <ContactForm />
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <div class="footer-brand">
+      <Wordmark variant="light" />
+    </div>
+    <nav class="footer-nav" aria-label="Footermenu">
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+    <p class="copyright">© {year} Boitelle Opleidingen B.V.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: clamp(3rem, 1rem + 6vw, 6rem);
+    padding-block: clamp(3.5rem, 2rem + 5vw, 6rem) 2.5rem;
+    background: var(--ink);
+    color: color-mix(in srgb, var(--cream) 86%, transparent);
+    position: relative;
+    overflow: hidden;
+  }
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 38rem;
+    height: 38rem;
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--terracotta) 26%, transparent),
+      transparent 62%
+    );
+    pointer-events: none;
+  }
+
+  .footer-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(2.5rem, 1rem + 5vw, 5.5rem);
+    align-items: start;
+  }
+
+  .eyebrow-light {
+    color: var(--ochre);
+  }
+  .eyebrow-light::before {
+    background: var(--ochre);
+  }
+
+  .footer-intro h2 {
+    margin-top: 1rem;
+    color: var(--cream);
+    max-width: 14ch;
+  }
+  .footer-lead {
+    margin-top: 1rem;
+    max-width: 42ch;
+    color: color-mix(in srgb, var(--cream) 72%, transparent);
+  }
+
+  .contact-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .contact-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .contact-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--cream) 52%, transparent);
+  }
+  .contact-list a {
+    font-size: 1.05rem;
+    transition: color 0.2s ease;
+  }
+  .contact-list a:hover {
+    color: var(--ochre);
+  }
+
+  .footer-form {
+    background: color-mix(in srgb, var(--cream) 5%, transparent);
+    border: 1px solid color-mix(in srgb, var(--cream) 12%, transparent);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  }
+
+  .footer-bottom {
+    position: relative;
+    margin-top: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+    padding-top: 1.75rem;
+    border-top: 1px solid color-mix(in srgb, var(--cream) 14%, transparent);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+  .footer-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+  }
+  .footer-nav a {
+    font-size: var(--fs-small);
+    color: color-mix(in srgb, var(--cream) 72%, transparent);
+    transition: color 0.2s ease;
+  }
+  .footer-nav a:hover {
+    color: var(--cream);
+  }
+  .copyright {
+    font-size: 0.85rem;
+    color: color-mix(in srgb, var(--cream) 52%, transparent);
+  }
+
+  @media (max-width: 880px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 620px) {
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

@@ -1,0 +1,160 @@
+---
+// Klantnamen als redactionele regel: één grote serif-zin waarin elke naam
+// na elkaar oplicht en een handgetekende accentstreek onder zich krijgt.
+// Zodra er echte logo-bestanden zijn kan dit een logowand worden.
+import { clients } from '../data/site';
+
+interface Props {
+  label?: string;
+}
+const { label = 'Vertrouwd door organisaties als' } = Astro.props;
+
+const accents = ['ochre', 'sage', 'terracotta', 'ochre'];
+// Twee streek-varianten, afgewisseld voor een handgetekend gevoel
+const strokes = ['M2,9 Q26,4.5 50,7.5 T98,6', 'M2,6.5 Q30,9.5 54,6 T98,8'];
+---
+
+<div class="logo-strip reveal reveal-hold">
+  <p class="strip-label">{label}</p>
+  <p class="trust-line">
+    {
+      clients.map((name, i) => (
+        <Fragment>
+          {i > 0 && <span class="sep" style={`--i:${i}`}>{i === clients.length - 1 ? ' en de ' : ', '}</span>}
+          <span class:list={['client', `is-${accents[i % accents.length]}`]} style={`--i:${i}`}>
+            {name}
+            <svg class="stroke" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true">
+              <path
+                d={strokes[i % strokes.length]}
+                pathLength="1"
+                fill="none"
+                stroke-width="3.4"
+                stroke-linecap="round"
+              />
+            </svg>
+          </span>
+        </Fragment>
+      ))
+    }<span class="dot" style={`--i:${clients.length}`}>.</span>
+  </p>
+</div>
+
+<style>
+  .logo-strip {
+    text-align: center;
+  }
+  .strip-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .trust-line {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 1.05rem + 2.1vw, 2.5rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    color: var(--muted);
+    max-width: 36ch;
+    margin-inline: auto;
+    text-wrap: balance;
+  }
+  .sep {
+    font-weight: 400;
+  }
+  .dot {
+    color: var(--ochre);
+    font-weight: 600;
+  }
+
+  .client {
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    padding-bottom: 0.1em;
+    transition: color 0.25s ease;
+  }
+  .is-ochre {
+    --accent: var(--ochre);
+  }
+  .is-sage {
+    --accent: var(--sage);
+  }
+  .is-terracotta {
+    --accent: var(--terracotta);
+  }
+  .client:hover {
+    color: var(--terracotta-dark);
+  }
+
+  .stroke {
+    position: absolute;
+    left: -2%;
+    bottom: -0.06em;
+    width: 104%;
+    height: 0.3em;
+    overflow: visible;
+    transform-origin: bottom;
+    transition: transform 0.25s var(--ease);
+  }
+  .client:hover .stroke {
+    transform: scaleY(1.35);
+  }
+  .stroke path {
+    stroke: var(--accent);
+    /* Ruimere gap + overshoot-offset: anders prikt de ronde linecap van de
+       nog niet getekende streek als stipje door de dash-grens heen */
+    stroke-dasharray: 1 1.2;
+  }
+
+  /* Entree: namen stijgen één voor één op, daarna tekent de streek zich.
+     Separators en punt liften mee op de stagger (alleen fade: inline-block
+     zou hun omliggende spaties opslokken). Alles gegate op html.js zodat
+     de regel zonder JS gewoon zichtbaar is. */
+  :global(html.js) .logo-strip:not(.is-visible) .client {
+    opacity: 0;
+    transform: translateY(0.4em);
+  }
+  :global(html.js) .logo-strip:not(.is-visible) .sep,
+  :global(html.js) .logo-strip:not(.is-visible) .dot {
+    opacity: 0;
+  }
+  :global(html.js) .client,
+  :global(html.js) .sep,
+  :global(html.js) .dot {
+    transition:
+      opacity 0.45s ease calc(0.15s + var(--i) * 0.22s),
+      transform 0.5s var(--ease) calc(0.15s + var(--i) * 0.22s),
+      color 0.25s ease 0s;
+  }
+  :global(html.js) .stroke path {
+    stroke-dashoffset: 1.08;
+    transition: stroke-dashoffset 0.55s var(--ease) calc(0.42s + var(--i) * 0.22s);
+  }
+  :global(html.js) .logo-strip.is-visible .stroke path {
+    stroke-dashoffset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.js) .logo-strip:not(.is-visible) .client,
+    :global(html.js) .logo-strip:not(.is-visible) .sep,
+    :global(html.js) .logo-strip:not(.is-visible) .dot {
+      opacity: 1;
+      transform: none;
+    }
+    :global(html.js) .client,
+    :global(html.js) .sep,
+    :global(html.js) .dot,
+    :global(html.js) .stroke path {
+      transition: none;
+    }
+    :global(html.js) .stroke path {
+      stroke-dashoffset: 0;
+    }
+  }
+</style>

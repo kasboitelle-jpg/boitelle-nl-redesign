@@ -1,0 +1,288 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Reveal from '../components/Reveal.astro';
+import { site } from '../data/site';
+
+const facts = [
+  { label: 'Looptijd', value: 'circa 6 maanden' },
+  { label: 'Contactmomenten', value: 'minimaal 10 per team' },
+  { label: 'Groepsgrootte', value: '1 tot 10 deelnemers' },
+  { label: 'Voorbereiding', value: 'ca. 0,5 uur per bijeenkomst' },
+  { label: 'Kennismaking', value: 'ca. 1,5 uur, op locatie' },
+  { label: 'Betaling', value: 'binnen 30 dagen' },
+];
+---
+
+<BaseLayout
+  title="Opleidingen"
+  description="Opleiding ‘Datagedreven grip op verzuim’, een praktijkgerichte beroepsopleiding voor leidinggevenden."
+  noindex={true}
+>
+  <section class="page-hero left">
+    <div class="container">
+      <Reveal>
+        <span class="eyebrow">Opleidingen</span>
+        <h1>Datagedreven grip op verzuim</h1>
+        <p class="sub">Praktijkgerichte beroepsopleiding voor leidinggevenden</p>
+        <p class="lead">
+          Na deze opleiding krijgt u binnen uw eigen werkomgeving gestructureerd en
+          professioneel grip op verzuim door datagedreven inzichten, effectieve
+          communicatie en een heldere verzuimaanpak met elkaar te verbinden.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container opl-layout">
+      <div class="opl-content prose">
+        <section class="block reveal">
+          <h3>Resultaat</h3>
+          <p>Na afronding van deze opleiding is de deelnemer in staat om:</p>
+          <ul>
+            <li>Verzuimontwikkelingen op team- en afdelingsniveau te analyseren en te interpreteren.</li>
+            <li>Vroegtijdig signalen van stijgend verzuim te herkennen en hier passend op te handelen.</li>
+            <li>Verzuim- en re-integratiegesprekken op een professionele en doelgerichte manier te voeren.</li>
+            <li>Preventieve interventies toe te passen binnen het eigen team.</li>
+            <li>Samen te werken met HR rondom verzuimbeleid en uitvoering.</li>
+          </ul>
+          <p>Zo draagt de opleiding bij aan het functioneren van de deelnemer binnen de huidige én toekomstige beroepspraktijk.</p>
+        </section>
+
+        <section class="block reveal">
+          <h3>Voor wie?</h3>
+          <p>Deze opleiding is bedoeld voor:</p>
+          <ul>
+            <li>Direct leidinggevenden met verantwoordelijkheid voor verzuim binnen hun team.</li>
+            <li>Managers met minimaal hbo werk- en denkniveau.</li>
+          </ul>
+          <p>De opleiding richt zich op deelnemers die het geleerde direct toepassen binnen hun eigen organisatie.</p>
+        </section>
+
+        <section class="block reveal">
+          <h3>Beroepsgericht karakter</h3>
+          <p>
+            Deze opleiding heeft een duidelijk beroepsgericht karakter. Alle onderdelen zijn
+            gericht op het verbeteren van het professioneel handelen van leidinggevenden en
+            HR in hun dagelijkse werksituatie. Er wordt uitsluitend gewerkt met
+            praktijksituaties uit de eigen organisatie.
+          </p>
+        </section>
+
+        <section class="block reveal">
+          <h3>Praktijkgerichte opbouw</h3>
+          <p>De opleiding bestaat uit een combinatie van:</p>
+          <ul>
+            <li>Theoretische kaders rondom verzuim, gedrag en communicatie.</li>
+            <li>Inzicht in het interpreteren van verzuiminformatie op groepsniveau.</li>
+            <li>Praktische oefeningen met eigen casuïstiek.</li>
+          </ul>
+          <p>Een belangrijk onderdeel is het oefenen van gesprekken met medewerkers, waarbij deelnemers leren omgaan met uiteenlopende verzuimsituaties.</p>
+        </section>
+
+        <section class="block reveal">
+          <h3>Inhoud en opbouw</h3>
+          <p>De opleiding wordt per team verzorgd en bestaat onder andere uit:</p>
+          <ul>
+            <li>Analyse van verzuimontwikkelingen op teamniveau.</li>
+            <li>Training in het toepassen van datagedreven inzichten.</li>
+            <li>Oefenen van verzuim-, preventie- en re-integratiegesprekken.</li>
+            <li>Bespreken van knelpunten en dilemma’s uit de praktijk.</li>
+            <li>Borging van het geleerde in het dagelijks werk.</li>
+          </ul>
+        </section>
+
+        <section class="block reveal">
+          <h3>Huiswerkopdrachten</h3>
+          <p>Tussen de bijeenkomsten door werken deelnemers aan:</p>
+          <ul>
+            <li>Het voorbereiden van eigen praktijksituaties.</li>
+            <li>Het toepassen van het geleerde in de eigen werkomgeving.</li>
+            <li>Reflectie op eigen handelen.</li>
+          </ul>
+          <p>Gemiddelde voorbereidingstijd: circa 0,5 uur per bijeenkomst.</p>
+        </section>
+
+        <section class="block reveal">
+          <h3>Opbouw en duur</h3>
+          <p>De opleiding heeft een looptijd van circa 6 maanden en bestaat uit:</p>
+          <ul>
+            <li>Meerdere contactbijeenkomsten per team.</li>
+            <li>Praktische toepassing tussen de bijeenkomsten door.</li>
+            <li>Evaluatie- en borgingsmomenten.</li>
+          </ul>
+          <p>Per team worden minimaal 10 contactmomenten doorlopen.</p>
+        </section>
+
+        <section class="block reveal">
+          <h3>Groepsgrootte</h3>
+          <p>De groepsgrootte varieert van 1 tot maximaal 10 deelnemers per groep.</p>
+        </section>
+
+        <section class="block reveal">
+          <h3>Studiemateriaal</h3>
+          <p>Het benodigde studiemateriaal en de ondersteunende documentatie zijn bij de opleiding inbegrepen.</p>
+        </section>
+
+        <section class="block reveal">
+          <h3>Kennismakingsgesprek</h3>
+          <p>Voorafgaand aan de opleiding vindt een kennismakingsgesprek plaats waarin:</p>
+          <ul>
+            <li>De leerdoelen worden besproken.</li>
+            <li>Wordt beoordeeld of de opleiding passend is bij de deelnemer en organisatie.</li>
+          </ul>
+          <p>Het kennismakingsgesprek duurt circa 1,5 uur en vindt plaats op locatie.</p>
+        </section>
+
+        <section class="block reveal">
+          <h3>Factuur</h3>
+          <p>Bij de start van het opleidingstraject ontvangt de opdrachtgever de factuur. De factuur bevat het totaalbedrag van de opleiding en dient binnen 30 dagen te worden voldaan.</p>
+        </section>
+      </div>
+
+      <!-- Snelle feiten + contact -->
+      <aside class="opl-aside">
+        <div class="facts-card">
+          <p class="facts-title">In het kort</p>
+          <dl>
+            {
+              facts.map((f) => (
+                <div class="fact">
+                  <dt>{f.label}</dt>
+                  <dd>{f.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <div class="aside-contact">
+            <p class="facts-title">Meer informatie</p>
+            <p>{site.director}</p>
+            <a href={site.phoneHref} class="aside-phone">{site.phone}</a>
+            <a href="#contact" class="btn aside-btn">
+              Plan een kennismaking
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(1rem, 0.5rem + 2vw, 2rem);
+  }
+  .page-hero .eyebrow {
+    margin-bottom: 1.25rem;
+  }
+  .page-hero h1 {
+    margin-bottom: 0.5rem;
+  }
+  .sub {
+    font-size: 1.05rem;
+    color: var(--sage-deep);
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+  }
+  .page-hero .lead {
+    max-width: 60ch;
+  }
+
+  .opl-layout {
+    display: grid;
+    grid-template-columns: 1fr 19rem;
+    gap: clamp(2rem, 1rem + 3vw, 4rem);
+    align-items: start;
+  }
+  .opl-content {
+    max-width: 70ch;
+  }
+  .block {
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .opl-content > :global(.block:first-child) {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+  }
+  .block h3 {
+    margin-top: 0;
+  }
+
+  .opl-aside {
+    position: sticky;
+    top: 6.5rem;
+  }
+  .facts-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .facts-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .facts-card dl {
+    display: flex;
+    flex-direction: column;
+  }
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .fact:last-child {
+    border-bottom: none;
+  }
+  .fact dt {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .fact dd {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .aside-contact {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .aside-contact p {
+    color: var(--ink-soft);
+  }
+  .aside-phone {
+    display: inline-block;
+    margin-top: 0.35rem;
+    font-weight: 600;
+    color: var(--terracotta);
+  }
+  .aside-btn {
+    margin-top: 1.25rem;
+    width: 100%;
+  }
+
+  @media (max-width: 900px) {
+    .opl-layout {
+      grid-template-columns: 1fr;
+    }
+    .opl-aside {
+      position: static;
+      order: -1;
+    }
+  }
+</style>

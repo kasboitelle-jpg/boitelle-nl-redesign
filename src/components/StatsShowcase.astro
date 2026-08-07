@@ -1,0 +1,331 @@
+---
+// Stats-sectie: twee-tonige kop, geanimeerde tellers en een decoratieve
+// dalende verzuimcurve (eigen SVG, geen data-pretentie). Twee standen:
+// volledig (Waarom ons?) en compact (home).
+import StatCounter from './StatCounter.astro';
+import { stats } from '../data/site';
+
+interface Props {
+  /** Donkere openingszin van de kop. */
+  title: string;
+  /** Gedempte vervolgtekst in dezelfde kop. */
+  muted: string;
+  compact?: boolean;
+}
+const { title, muted, compact = false } = Astro.props;
+---
+
+<section class:list={['stats-showcase', compact && 'compact']}>
+  <div class="container">
+    <h2 class="show-heading reveal">
+      {title}{' '}
+      <span class="show-muted">{muted}</span>
+    </h2>
+
+    <div class="show-stats reveal reveal-hold">
+      {stats.map((s) => <StatCounter value={s.value} suffix={s.suffix} label={s.label} />)}
+    </div>
+
+    <!-- Decoratieve dalende verzuimlijn. Geen eigen .reveal: de animatie
+         start samen met de tellers zodra .show-stats in beeld komt. -->
+    <div class="show-chart" aria-hidden="true">
+      <svg viewBox="0 0 800 224" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="stats-area" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--terracotta)" stop-opacity="0.22" />
+            <stop offset="70%" stop-color="var(--ochre)" stop-opacity="0.07" />
+            <stop offset="100%" stop-color="var(--ochre)" stop-opacity="0" />
+          </linearGradient>
+          <!-- Verhaal in kleur: hoog verzuim (terracotta) koelt af naar gezond (salie) -->
+          <linearGradient id="stats-stroke" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="var(--terracotta)" />
+            <stop offset="55%" stop-color="var(--ochre)" />
+            <stop offset="100%" stop-color="var(--sage-deep)" />
+          </linearGradient>
+        </defs>
+
+        <g class="chart-grid">
+          <line x1="0" y1="36" x2="800" y2="36" />
+          <line x1="0" y1="92" x2="800" y2="92" />
+          <line x1="0" y1="148" x2="800" y2="148" />
+        </g>
+        <line class="chart-base" x1="0" y1="204" x2="800" y2="204" />
+
+        <path
+          class="chart-area"
+          d="M0,48 C60,52 115,66 170,76 C225,86 265,100 320,110 C375,120 415,116 470,130 C525,144 565,152 620,160 C675,168 740,174 800,178 L800,204 L0,204 Z"
+          fill="url(#stats-area)"
+        />
+        <path
+          class="chart-glow"
+          d="M0,48 C60,52 115,66 170,76 C225,86 265,100 320,110 C375,120 415,116 470,130 C525,144 565,152 620,160 C675,168 740,174 800,178"
+          pathLength="1"
+          fill="none"
+          stroke="url(#stats-stroke)"
+          stroke-width="12"
+          stroke-linecap="round"
+        />
+        <path
+          class="chart-line"
+          d="M0,48 C60,52 115,66 170,76 C225,86 265,100 320,110 C375,120 415,116 470,130 C525,144 565,152 620,160 C675,168 740,174 800,178"
+          pathLength="1"
+          fill="none"
+          stroke="url(#stats-stroke)"
+          stroke-width="4"
+          stroke-linecap="round"
+        />
+      </svg>
+
+      <!-- Meetpunten als HTML-overlay: preserveAspectRatio="none" zou SVG-cirkels uitrekken -->
+      <div class="chart-points">
+        <span class="chart-point" style="--x:21.25%; --y:33.9%; --i:0; --pc:color-mix(in srgb, var(--terracotta) 60%, var(--ochre))"></span>
+        <span class="chart-point" style="--x:40%; --y:49.1%; --i:1; --pc:color-mix(in srgb, var(--ochre) 75%, var(--terracotta))"></span>
+        <span class="chart-point" style="--x:58.75%; --y:58%; --i:2; --pc:var(--ochre)"></span>
+        <span class="chart-point" style="--x:77.5%; --y:71.4%; --i:3; --pc:color-mix(in srgb, var(--ochre) 50%, var(--sage-deep))"></span>
+        <span class="chart-end" style="--x:100%; --y:79.5%"></span>
+      </div>
+
+      <span class="chart-chip" style="--y:79.5%">verzuim <span class="chip-arrow">↘</span></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-showcase {
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem);
+  }
+  .stats-showcase.compact {
+    padding-block: clamp(2rem, 1.25rem + 2.5vw, 3.5rem);
+  }
+
+  /* Twee-tonige kop: donkere opening, gedempt vervolg in dezelfde regelval */
+  .show-heading {
+    font-size: clamp(1.5rem, 1.15rem + 1.7vw, 2.6rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    max-width: 30ch;
+    margin-bottom: clamp(2.25rem, 1.5rem + 2.5vw, 4rem);
+    text-wrap: pretty;
+  }
+  .show-muted {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .show-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 52rem;
+  }
+  /* Links uitgelijnd, zoals de kop erboven */
+  .show-stats :global(.stat) {
+    text-align: left;
+  }
+
+  .show-chart {
+    position: relative;
+    margin-top: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+  }
+  .show-chart svg {
+    display: block;
+    width: 100%;
+    height: clamp(7.5rem, 5rem + 8vw, 13rem);
+  }
+  .stats-showcase.compact .show-chart svg {
+    height: clamp(5.5rem, 4rem + 5vw, 9.5rem);
+  }
+
+  /* Fijn stippelraster + basislijn geven de curve houvast */
+  .chart-grid line {
+    stroke: var(--line);
+    stroke-width: 1.5;
+    stroke-dasharray: 1 10;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.8;
+  }
+  .chart-base {
+    stroke: var(--line);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* Draw-in van de lijn, getriggerd door de tellerrij (.show-stats) zodat
+     cijfers en grafiek als één scène spelen. Beginstanden gegate op html.js:
+     zonder JS is de grafiek gewoon compleet zichtbaar. */
+  /* Grafiek tekent trager (3,6 s) en start eerder (0,1 s delay) zodat de
+     animatie langer zichtbaar is terwijl je scrollt. Einde is nu 3,7 s. */
+  .chart-line,
+  .chart-glow {
+    stroke-dasharray: 1;
+    transition: stroke-dashoffset 3.6s var(--ease) 0.1s;
+  }
+  :global(html.js) .chart-line,
+  :global(html.js) .chart-glow {
+    stroke-dashoffset: 1;
+  }
+  .chart-glow {
+    opacity: 0.16;
+    filter: blur(6px);
+  }
+  .chart-area {
+    transition: opacity 0.9s ease 1.8s;
+  }
+  :global(html.js) .chart-area {
+    opacity: 0;
+  }
+  .show-stats.is-visible ~ .show-chart .chart-line,
+  .show-stats.is-visible ~ .show-chart .chart-glow {
+    stroke-dashoffset: 0;
+  }
+  .show-stats.is-visible ~ .show-chart .chart-area {
+    opacity: 1;
+  }
+
+  /* Meetpunten poppen op terwijl de lijn ze passeert */
+  .chart-points {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .chart-point {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--pc, var(--terracotta));
+    border: 2px solid var(--card);
+    box-shadow: 0 1px 4px rgba(44, 39, 34, 0.18);
+    transform: translate(-50%, -50%);
+    transition:
+      opacity 0.45s ease,
+      transform 0.55s var(--ease);
+    transition-delay: calc(1.1s + var(--i) * 0.65s);
+  }
+  :global(html.js) .chart-point {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  .show-stats.is-visible ~ .show-chart .chart-point {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* Eindpunt met zachte puls */
+  .chart-end {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--sage-deep);
+    border: 2px solid var(--card);
+    box-shadow: 0 1px 4px rgba(44, 39, 34, 0.2);
+    transform: translate(-50%, -50%);
+    transition:
+      opacity 0.45s ease 3.5s,
+      transform 0.55s var(--ease) 3.5s;
+  }
+  :global(html.js) .chart-end {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  .show-stats.is-visible ~ .show-chart .chart-end {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .chart-end::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 2px solid var(--sage-deep);
+    opacity: 0;
+  }
+  .show-stats.is-visible ~ .show-chart .chart-end::before {
+    animation: chart-pulse 3s ease-out 4.2s infinite;
+  }
+  @keyframes chart-pulse {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.5;
+    }
+    60% {
+      transform: scale(1.9);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1.9);
+      opacity: 0;
+    }
+  }
+
+  /* Chip zweeft boven het eindpunt en schuift na de draw-in binnen */
+  .chart-chip {
+    position: absolute;
+    right: 0;
+    top: var(--y, 0%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    padding: 0.35em 0.85em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--sage-deep);
+    background: var(--sage-tint);
+    border: 1px solid color-mix(in srgb, var(--sage) 35%, transparent);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 2px 8px rgba(44, 39, 34, 0.08);
+    transform: translateY(calc(-100% - 0.85rem));
+    transition:
+      opacity 0.5s ease 3.65s,
+      transform 0.5s ease 3.65s;
+  }
+  :global(html.js) .chart-chip {
+    opacity: 0;
+    transform: translateY(calc(-100% - 0.45rem));
+  }
+  .show-stats.is-visible ~ .show-chart .chart-chip {
+    opacity: 1;
+    transform: translateY(calc(-100% - 0.85rem));
+  }
+  .chip-arrow {
+    color: var(--terracotta);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.js) .chart-line,
+    :global(html.js) .chart-glow {
+      stroke-dashoffset: 0;
+    }
+    :global(html.js) .chart-area {
+      opacity: 1;
+    }
+    :global(html.js) .chart-point,
+    :global(html.js) .chart-end {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      transition: none;
+    }
+    :global(html.js) .chart-chip {
+      opacity: 1;
+      transform: translateY(calc(-100% - 0.85rem));
+      transition: none;
+    }
+    .show-stats.is-visible ~ .show-chart .chart-end::before {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .show-stats {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+  }
+</style>

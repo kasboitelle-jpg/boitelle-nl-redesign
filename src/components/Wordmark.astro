@@ -1,0 +1,67 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  /** 'light' voor donkere achtergrond (footer). */
+  variant?: 'default' | 'light';
+}
+const { variant = 'default' } = Astro.props;
+---
+
+<span class:list={['wordmark', variant]}>
+  <span class="mark" aria-hidden="true"></span>
+  <span class="wordmark-text">
+    <span class="name">{site.name}</span>
+    <span class="suffix">{site.suffix}</span>
+  </span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .mark {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: var(--terracotta);
+    box-shadow: 0 0 0 4px var(--terracotta-tint);
+    flex: none;
+  }
+  .wordmark-text {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    line-height: 1;
+  }
+  .name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .suffix {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-left: 0.55rem;
+    border-left: 1px solid var(--line-strong);
+  }
+
+  .wordmark.light .name {
+    color: var(--cream);
+  }
+  .wordmark.light .suffix {
+    color: color-mix(in srgb, var(--cream) 70%, transparent);
+    border-left-color: color-mix(in srgb, var(--cream) 30%, transparent);
+  }
+  .wordmark.light .mark {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--terracotta) 28%, transparent);
+  }
+</style>

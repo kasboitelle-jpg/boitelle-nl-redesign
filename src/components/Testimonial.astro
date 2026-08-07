@@ -1,0 +1,81 @@
+---
+interface Props {
+  quote: string;
+  name: string;
+  role: string;
+}
+const { quote, name, role } = Astro.props;
+---
+
+<figure class="testimonial">
+  <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+  <blockquote>{quote}</blockquote>
+  <figcaption>
+    <span class="t-name">{name}</span>
+    <span class="t-role">{role}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .testimonial {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .testimonial::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--terracotta), var(--ochre));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease);
+  }
+  .testimonial:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow);
+  }
+  .testimonial:hover::after {
+    transform: scaleX(1);
+  }
+
+  .quote-mark {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    line-height: 0.7;
+    color: var(--terracotta);
+    opacity: 0.35;
+  }
+  blockquote {
+    margin: 0.75rem 0 1.75rem;
+    font-family: var(--font-serif);
+    font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.55rem);
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  figcaption {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  .t-name {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .t-role {
+    font-size: var(--fs-small);
+    color: var(--muted);
+  }
+</style>

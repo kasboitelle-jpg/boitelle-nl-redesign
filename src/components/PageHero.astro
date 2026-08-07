@@ -1,0 +1,44 @@
+---
+import Reveal from './Reveal.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  align?: 'center' | 'left';
+}
+const { eyebrow, title, lead, align = 'center' } = Astro.props;
+---
+
+<section class:list={['page-hero', align]}>
+  <div class:list={['container', align === 'center' && 'container-narrow', align === 'center' && 'text-center']}>
+    <Reveal>
+      <span class="eyebrow">{eyebrow}</span>
+      <h1>{title}</h1>
+      {lead && <p class="lead">{lead}</p>}
+    </Reveal>
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(1.5rem, 1rem + 2vw, 3rem);
+    position: relative;
+  }
+  .page-hero .eyebrow {
+    margin-bottom: 1.25rem;
+  }
+  .page-hero.center .eyebrow {
+    display: inline-flex;
+  }
+  .page-hero h1 {
+    margin-bottom: 1.25rem;
+  }
+  .page-hero.center .lead {
+    margin-inline: auto;
+    max-width: 56ch;
+  }
+  .page-hero.left .lead {
+    max-width: 56ch;
+  }
+</style>

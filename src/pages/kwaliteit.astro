@@ -1,0 +1,210 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+
+const sections = [
+  { id: 'evaluatie', label: 'Evaluatie van docenten' },
+  { id: 'kwaliteitsborging', label: 'Externe kwaliteitsborging' },
+  { id: 'klachten', label: 'Klachtenprocedure' },
+  { id: 'privacy', label: 'Privacy' },
+];
+---
+
+<BaseLayout
+  title="Kwaliteit"
+  description="Hoe Boitelle de kwaliteit borgt: continue evaluatie, CRKBO-kwaliteitscode, klachtenprocedure en privacy."
+>
+  <PageHero
+    eyebrow="Kwaliteit"
+    title="Hoe waarborgen wij onze kwaliteit"
+    lead="Kwaliteit en resultaat zijn voor ons prioriteit 1."
+  />
+
+  <section class="section kwaliteit">
+    <div class="container">
+      <div class="kwaliteit-layout">
+        <!-- Subnavigatie -->
+        <aside class="toc" aria-label="Op deze pagina">
+          <p class="toc-title">Op deze pagina</p>
+          <ul>
+            {sections.map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+          </ul>
+        </aside>
+
+        <div class="kwaliteit-content">
+          <!-- Evaluatie van docenten — letterlijk behouden (CRKBO) -->
+          <section class="prose block reveal">
+            <h3 id="evaluatie">Evaluatie van docenten</h3>
+            <p>
+              Elk half jaar worden de docenten geëvalueerd door een extern universitair
+              geschoolde onderwijskundige. Deze toetst zowel inhoud van de aangeboden
+              trainingen als ook het niveau en werkwijze van de docenten.
+              Evaluatieformulieren die zijn ingevuld door de cursisten vormen hiervoor
+              het uitgangspunt.
+            </p>
+            <p>
+              Samen met de docent worden de evaluatieformulieren doorgenomen en wordt er
+              in kaart gebracht wat goed gaat en wat verbeterpunten zijn. De
+              verbeterpunten worden in het navolgende evaluatiemoment opnieuw getoetst
+              aan de hand van de nieuwe evaluatieformulieren.
+            </p>
+            <p>
+              Op deze wijze creëren wij een continue feedbackloop die leidt tot steeds
+              hoger kwaliteitsniveau.
+            </p>
+          </section>
+
+          <!-- CRKBO / BTW — letterlijk behouden -->
+          <section class="prose block reveal">
+            <h3 id="kwaliteitsborging">Externe kwaliteitsborging</h3>
+            <p>
+              Boitelle Opleidingen B.V. werkt conform de Kwaliteitscode voor
+              Opleidingsinstituten voor Kort Beroepsonderwijs (CRKBO).
+            </p>
+            <p>
+              Voor beroepsopleidingen kan, indien wordt voldaan aan de voorwaarden van de
+              Belastingdienst, BTW-vrijstelling van toepassing zijn. Dit wordt per opleiding
+              beoordeeld en op de factuur vermeld. In het kader van de
+              CRKBO-kwaliteitsborging vindt periodiek een externe audit plaats.
+            </p>
+          </section>
+
+          <!-- Klachtenprocedure — letterlijk behouden -->
+          <section class="prose block reveal">
+            <h3 id="klachten">Klachtenprocedure</h3>
+            <p>Klachten kunnen schriftelijk worden ingediend bij:</p>
+            <address class="postal">
+              {site.address.org}<br />
+              {site.address.attn}<br />
+              {site.address.postbus}<br />
+              {site.address.city}
+            </address>
+            <ul>
+              <li>De ontvangst van de klacht wordt binnen een week schriftelijk bevestigd aan de indiener.</li>
+              <li>De afhandeling van de klacht valt onder verantwoordelijkheid van de directeur.</li>
+              <li>Binnen twee weken kunt u een schriftelijke reactie verwachten van het uiteindelijke oordeel. Mocht er een langere tijd nodig zijn om de klacht te beoordelen dan wordt dat schriftelijk medegedeeld inclusief een toelichting en datum waarop u een reactie kunt verwachten.</li>
+              <li>Met de klacht zal vertrouwelijk worden omgegaan.</li>
+              <li>Klacht en wijze van afhandeling zal 1 jaar worden bewaard.</li>
+            </ul>
+            <p>
+              Indien u het niet eens bent met de uitkomsten van deze procedure kunt u uw
+              klachten ook neerleggen bij het NIP
+              (<a href="http://www.psynip.nl/" target="_blank" rel="noopener">Nederlands Instituut van Psychologen</a>).
+            </p>
+            <p>
+              Alle docenten van Boitelle Opleidingen B.V. zijn NIP-psychologen. Het oordeel
+              van deze beroepsinstantie is bindend voor het instituut. Eventuele
+              consequenties worden door het instituut afgehandeld binnen 14 dagen.
+            </p>
+          </section>
+
+          <!-- Privacy — letterlijk behouden -->
+          <section class="prose block reveal">
+            <h3 id="privacy">Privacy</h3>
+            <p>
+              De persoonlijke en zakelijke levenssfeer van klanten heeft Boitelle HR
+              Proactief hoog in het vaandel staan. Alle persoonlijke gegevens worden met de
+              grootst mogelijke zorgvuldigheid behandeld en beveiligd.
+            </p>
+            <p>
+              Persoonsgegevens worden uitsluitend verwerkt ten behoeve van de uitvoering en
+              evaluatie van opleidingen en niet langer bewaard dan noodzakelijk.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .kwaliteit-layout {
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+    gap: clamp(2rem, 1rem + 3vw, 4.5rem);
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 6.5rem;
+  }
+  .toc-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .toc ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    border-left: 2px solid var(--line);
+  }
+  .toc a {
+    display: block;
+    padding: 0.5rem 0 0.5rem 1rem;
+    margin-left: -2px;
+    border-left: 2px solid transparent;
+    font-size: var(--fs-small);
+    color: var(--muted);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .toc a:hover {
+    color: var(--terracotta);
+    border-left-color: var(--terracotta);
+  }
+
+  .kwaliteit-content {
+    max-width: 68ch;
+  }
+  .block {
+    padding-top: 2.5rem;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .kwaliteit-content .block:first-child {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+  }
+  .block h3 {
+    margin-top: 0;
+    scroll-margin-top: 6.5rem;
+  }
+  .postal {
+    font-style: normal;
+    padding: 1.1rem 1.4rem;
+    background: var(--sand);
+    border-radius: var(--radius);
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  @media (max-width: 820px) {
+    .kwaliteit-layout {
+      grid-template-columns: 1fr;
+    }
+    .toc {
+      position: static;
+    }
+    .toc ul {
+      flex-direction: row;
+      flex-wrap: wrap;
+      border-left: none;
+      gap: 0.5rem;
+    }
+    .toc a {
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      margin-left: 0;
+    }
+    .toc a:hover {
+      border-color: var(--terracotta);
+    }
+  }
+</style>

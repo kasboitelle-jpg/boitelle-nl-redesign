@@ -1,0 +1,21 @@
+# Environment variables (bevat secrets — nooit committen)
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.next/
+.cache/
+
+# Astro / Vercel
+.astro/
+.vercel/
+
+# OS / editor
+.DS_Store
+*.log
