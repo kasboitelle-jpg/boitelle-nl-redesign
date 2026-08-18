@@ -3,7 +3,7 @@
 export const site = {
   name: 'Boitelle',
   suffix: 'HR Proactief',
-  tagline: 'De bewezen, datagedreven aanpak voor verzuimreductie',
+  tagline: 'Datagedreven aanpak voor verzuimreductie',
   phone: '085 - 8768778',
   phoneHref: 'tel:+31858768778',
   email: 'info@boitelle.nl',
