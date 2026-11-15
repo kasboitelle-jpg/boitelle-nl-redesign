@@ -23,10 +23,9 @@ const isActive = (href: string) => (href.replace(/\/$/, '') || '/') === path;
             </li>
           ))
         }
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
-
-    <a href="#contact" class="btn header-cta">Contact</a>
 
     <button
       class="nav-toggle"
@@ -52,7 +51,7 @@ const isActive = (href: string) => (href.replace(/\/$/, '') || '/') === path;
           ))
         }
         <li>
-          <a href="#contact" class="btn mobile-cta">Contact</a>
+          <a href="#contact">Contact</a>
         </li>
       </ul>
     </nav>
@@ -160,9 +159,6 @@ const isActive = (href: string) => (href.replace(/\/$/, '') || '/') === path;
     transform: scaleX(1);
   }
 
-  .header-cta {
-    padding: 0.7em 1.3em;
-  }
 
   /* Hamburger */
   .nav-toggle {
@@ -224,16 +220,9 @@ const isActive = (href: string) => (href.replace(/\/$/, '') || '/') === path;
   .mobile-menu a[aria-current='page'] {
     color: var(--terracotta);
   }
-  .mobile-menu .mobile-cta {
-    margin-top: 1rem;
-    border-bottom: none;
-    text-align: center;
-    color: #fff;
-  }
 
   @media (max-width: 860px) {
-    .primary-nav,
-    .header-cta {
+    .primary-nav {
       display: none;
     }
     .nav-toggle {

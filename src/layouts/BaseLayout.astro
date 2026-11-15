@@ -9,13 +9,13 @@ import { site } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
-  /** Verberg pagina voor zoekmachines (bijv. Opleidingen, dat niet in het menu staat). */
+  /** Verouderd: de hele site staat nu op noindex (zie <head>). */
   noindex?: boolean;
 }
 
 const {
   title,
-  description = 'Boitelle HR Proactief helpt organisaties verzuim en verloop duurzaam verminderen met een datagedreven aanpak.',
+  description = 'Boitelle HR Proactief is het bureau van psycholoog drs. Mark Boitelle in Nijmegen. Opleiding en begeleiding van leidinggevenden en teams rond verzuim en verloop.',
   noindex = false,
 } = Astro.props;
 
@@ -37,7 +37,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://www.boitell
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    <!-- Hele site bewust onvindbaar in zoekmachines (wens van Mark, nov 2026):
+         concurrenten mogen hem niet via Google vinden. Niet blokkeren in
+         robots.txt, anders ziet Google deze noindex nooit. -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
     <link rel="canonical" href={canonical.href} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />

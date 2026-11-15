@@ -20,7 +20,7 @@ export const site = {
 // (bestaat als pagina, alleen bereikbaar via directe URL).
 export const nav = [
   { label: 'Home', href: '/' },
-  { label: 'Waarom ons?', href: '/waarom-ons' },
+  { label: 'Over', href: '/over' },
   { label: 'Kwaliteit', href: '/kwaliteit' },
   { label: 'Voorwaarden', href: '/voorwaarden' },
 ];

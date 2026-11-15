@@ -5,4 +5,8 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://www.boitelle.nl',
   // Volledig statische output — Vercel detecteert Astro automatisch.
+  // 'Waarom ons?' heet sinds november 2026 'Over'; oude links blijven werken.
+  redirects: {
+    '/waarom-ons': '/over',
+  },
 });

@@ -1,9 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroSilk from '../components/HeroSilk.astro';
-import LogoStrip from '../components/LogoStrip.astro';
-import StatsShowcase from '../components/StatsShowcase.astro';
 import TestimonialScatter from '../components/TestimonialScatter.astro';
+import { site, clients } from '../data/site';
+
+// Korte feiten over Boitelle: platte informatie, geen tellers of logo's
+const facts = [
+  { label: 'Oprichter', value: site.director },
+  { label: 'Vestiging', value: 'Nijmegen' },
+  { label: 'Ervaring', value: 'Ruim twintig jaar' },
+  { label: 'Kwaliteit', value: 'Werkt conform de CRKBO-kwaliteitscode' },
+  {
+    label: 'Eerder samengewerkt met',
+    value: `${clients.slice(0, -1).join(', ')} en de ${clients[clients.length - 1]}`,
+  },
+];
 ---
 
 <BaseLayout title="Home">
@@ -13,24 +24,18 @@ import TestimonialScatter from '../components/TestimonialScatter.astro';
       <HeroSilk />
       <div class="hero-content">
         <div class="hero-copy">
-          <span class="eyebrow hero-anim">Datagedreven verzuimreductie</span>
+          <span class="eyebrow hero-anim">Boitelle HR Proactief · Nijmegen</span>
           <h1 class="hero-anim">
-            Duurzaam minder verzuim.<br />
-            Met een <em>datagedreven</em> aanpak.
+            Psycholoog en opleider op het gebied van <em>verzuim</em>.
           </h1>
         </div>
         <div class="hero-foot">
           <p class="lead hero-anim">
-            Boitelle HR Proactief ondersteunt organisaties bij het duurzaam
-            terugdringen van verzuim en verloop, met een datagedreven en
-            praktijkgerichte aanpak.
+            Drs. Mark Boitelle, psycholoog NIP, leidt leidinggevenden en teams op
+            in het werken met verzuimgegevens en het voeren van verzuimgesprekken.
           </p>
           <div class="hero-actions hero-anim">
-            <a href="#contact" class="btn">
-              Neem contact op
-              <span class="btn-arrow" aria-hidden="true">→</span>
-            </a>
-            <a href="/waarom-ons" class="btn btn-ghost hero-ghost">Ontdek waarom</a>
+            <a href="/over" class="btn btn-ghost hero-ghost">Over Mark Boitelle</a>
           </div>
         </div>
       </div>
@@ -38,29 +43,48 @@ import TestimonialScatter from '../components/TestimonialScatter.astro';
     </div>
   </section>
 
-  <!-- KLANTEN -->
-  <section class="section trust">
-    <div class="container">
-      <LogoStrip />
+  <!-- IN HET KORT: tekst + feitenlijst -->
+  <section class="section intro">
+    <div class="container intro-grid">
+      <div class="intro-text reveal">
+        <span class="eyebrow">In het kort</span>
+        <h2>Boitelle HR Proactief</h2>
+        <p>
+          Boitelle HR Proactief is onderdeel van Boitelle Opleidingen B.V. Het bureau
+          verzorgt opleidingen en begeleiding voor leidinggevenden en HR rond verzuim
+          en verloop.
+        </p>
+        <p>
+          De werkwijze combineert verzuimgegevens op team- en afdelingsniveau met
+          training in gespreksvoering. Er wordt gewerkt met situaties uit de eigen
+          organisatie, meestal op locatie.
+        </p>
+        <a href="/over" class="intro-link">
+          Meer over Mark Boitelle <span aria-hidden="true">→</span>
+        </a>
+      </div>
+      <dl class="intro-facts reveal">
+        {
+          facts.map((f) => (
+            <div class="fact">
+              <dt>{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
     </div>
   </section>
-
-  <!-- CIJFERS -->
-  <StatsShowcase
-    compact
-    title="Boitelle in het kort."
-    muted="Meer dan twintig jaar ervaring, honderden leidinggevenden en teams begeleid."
-  />
 
   <!-- TESTIMONIALS -->
   <section class="section testimonials">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow">Referenties</span>
-        <h2>Ervaringen van klanten</h2>
+        <span class="eyebrow">Uit de praktijk</span>
+        <h2>Reacties van deelnemers</h2>
         <p class="lead">
-          Van callcenter tot ICT-bedrijf: opdrachtgevers vertellen wat onze aanpak in
-          hun organisatie heeft opgeleverd.
+          Een paar reacties van leidinggevenden en HR-medewerkers die een traject
+          volgden.
         </p>
       </div>
 
@@ -292,8 +316,73 @@ import TestimonialScatter from '../components/TestimonialScatter.astro';
     margin-bottom: 1rem;
   }
 
-  .trust {
-    padding-block: clamp(2rem, 1rem + 3vw, 3.5rem);
+  /* In het kort: lopende tekst links, feitenlijst rechts */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: start;
+  }
+  .intro-text .eyebrow {
+    margin-bottom: 1rem;
+  }
+  .intro-text h2 {
+    margin-bottom: 1.25rem;
+  }
+  .intro-text p {
+    max-width: 52ch;
+    color: var(--ink-soft);
+  }
+  .intro-text p + p {
+    margin-top: 1rem;
+  }
+  .intro-link {
+    display: inline-flex;
+    gap: 0.5em;
+    margin-top: 1.75rem;
+    font-weight: 600;
+    font-size: var(--fs-small);
+    color: var(--terracotta);
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.3em;
+    transition: color 0.2s ease;
+  }
+  .intro-link:hover {
+    color: var(--terracotta-dark);
+  }
+  .intro-facts {
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .fact {
+    display: grid;
+    grid-template-columns: minmax(7rem, 0.8fr) minmax(0, 1.4fr);
+    gap: 0.4rem 1.5rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .fact dt {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.2em;
+  }
+  .fact dd {
+    margin: 0;
+    color: var(--ink);
+  }
+  @media (max-width: 820px) {
+    .intro-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .fact {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* Testimonial-band: volledige breedte, diepe olijf */
